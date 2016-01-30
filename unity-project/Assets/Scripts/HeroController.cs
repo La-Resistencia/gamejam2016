@@ -30,6 +30,8 @@ public class HeroController : MonoBehaviour {
         rb = GetComponent<Rigidbody>();
         //rotation = rb.rotation;
         maxSpeedTurbo = 20;
+
+
     }
 
     void Update()
@@ -41,7 +43,7 @@ public class HeroController : MonoBehaviour {
 	void FixedUpdate () 
     {
         hor = Input.GetAxis("Horizontal");
-        ver += Input.GetAxis("Vertical");
+        ver = Input.GetAxis("Vertical") *20;
         if (ver < 0) ver = 0;
         rotation = (hor * 200);
 
@@ -49,10 +51,10 @@ public class HeroController : MonoBehaviour {
         Quaternion deltaRotation = Quaternion.Euler(eulerAngleVelocity * Time.deltaTime);
         rb.MoveRotation(rb.rotation * deltaRotation);
         //rb.MoveRotation(-(rotation));
-        //Debug.Log(rb.rotation);
+        //Debug.Log("rotation "+rb.rotation+" ver: "+ver);
         //rb.velocity += Vector2.ClampMagnitude(new Vector2(ver * Mathf.Cos(ToRadians(rotation)), -ver * Mathf.Sin(ToRadians(rotation))), maxSpeed);
         speedToClamp = Input.GetKey(KeyCode.Space) ? maxSpeedTurbo : maxSpeed;
-        rb.velocity = Vector3.ClampMagnitude(
+        velocity = Vector3.ClampMagnitude(
             new Vector3(
                     ver * Mathf.Cos(ToRadians(rb.rotation.eulerAngles.y)),
                     0.0f,
@@ -81,12 +83,20 @@ public class HeroController : MonoBehaviour {
         //velocity += steering;
         //rb.velocity = Vector3.ClampMagnitude(velocity, maxSpeed); 
 	}
+
+    public void receiveVelocity(Vector3 _velocity)
+    {
+        rb.velocity = _velocity;
+    }
+
     void OnCollisionEnter(Collision collision)
     {
         if (collision.gameObject.tag == "wall")
         {
             Debug.Log("collision" + collision);
-            rb.AddForce(-rb.velocity);
+            rotation = -rotation;
+            ver = 10;
+            //rb.AddForce(-rb.velocity);
         }
             //rb.velocity = Vector3.Reflect(rb.velocity, rb.velocity.normalized);
     }
@@ -94,6 +104,11 @@ public class HeroController : MonoBehaviour {
     public float ToRadians(float angle)
     {
         return (Mathf.PI / 180) * angle;
+    }
+
+    public Vector3 Velocity
+    { 
+        get{ return this.velocity;}
     }
 
 }
