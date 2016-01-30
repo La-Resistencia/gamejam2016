@@ -69,12 +69,13 @@ public class MultiplayerMgr : MonoBehaviour {
             var cur_posx = float.Parse(data[0]);
             var cur_posy = float.Parse(data[1]);
 
-            var oth_posx = float.Parse(data[0]);
-            var oth_posy = float.Parse(data[1]);
+            var oth_posx = float.Parse(data[2]);
+            var oth_posy = float.Parse(data[3]);
             
             Debug.Log("RECIEVING: cat1x:" + _www.text);
             currentCat.GetComponent<HeroController>().receiveVelocity(new Vector3(cur_posx, 0.0f, cur_posy));
             otherCat.GetComponent<HeroController>().receiveVelocity(new Vector3(oth_posx, 0.0f, oth_posy));
+
             //Vector3 position = currentCat.gameObject.transform.localPosition;
             //position.x = float.Parse(data[0]);
             //position.y = float.Parse(data[1]);

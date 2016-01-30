@@ -54,13 +54,15 @@ public class HeroController : MonoBehaviour {
         //Debug.Log("rotation "+rb.rotation+" ver: "+ver);
         //rb.velocity += Vector2.ClampMagnitude(new Vector2(ver * Mathf.Cos(ToRadians(rotation)), -ver * Mathf.Sin(ToRadians(rotation))), maxSpeed);
         speedToClamp = Input.GetKey(KeyCode.Space) ? maxSpeedTurbo : maxSpeed;
-        velocity = Vector3.ClampMagnitude(
-            new Vector3(
-                    ver * Mathf.Cos(ToRadians(rb.rotation.eulerAngles.y)),
-                    0.0f,
-                    ver * -Mathf.Sin(ToRadians(rb.rotation.eulerAngles.y))
-                ),
-            speedToClamp);
+        //velocity = Vector3.ClampMagnitude(
+        //    new Vector3(
+        //            ver * Mathf.Cos(ToRadians(rb.rotation.eulerAngles.y)),
+        //            0.0f,
+        //            ver * -Mathf.Sin(ToRadians(rb.rotation.eulerAngles.y))
+        //        ),
+        //    speedToClamp);
+
+        rb.velocity = velocity;
 
         //hor = Input.GetAxis("Horizontal");
         //ver = Input.GetAxis("Vertical");
@@ -86,7 +88,7 @@ public class HeroController : MonoBehaviour {
 
     public void receiveVelocity(Vector3 _velocity)
     {
-        rb.velocity = _velocity;
+        velocity = _velocity;
     }
 
     void OnCollisionEnter(Collision collision)
@@ -108,7 +110,15 @@ public class HeroController : MonoBehaviour {
 
     public Vector3 Velocity
     { 
-        get{ return this.velocity;}
+        get{
+            return Vector3.ClampMagnitude(
+                 new Vector3(
+                         ver * Mathf.Cos(ToRadians(rb.rotation.eulerAngles.y)),
+                         0.0f,
+                         ver * -Mathf.Sin(ToRadians(rb.rotation.eulerAngles.y))
+                     ),
+                 speedToClamp);
+       }
     }
 
 }
