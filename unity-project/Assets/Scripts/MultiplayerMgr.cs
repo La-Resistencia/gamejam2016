@@ -46,8 +46,10 @@ public class MultiplayerMgr : MonoBehaviour {
         //form.AddField("x", (currentCat.transform.localPosition.x + ndeltaX).ToString());
         //form.AddField("y", (currentCat.transform.localPosition.y + ndeltaY).ToString());
         //form.AddField("session", timeStamp);
-        form.AddField("x", (currentCat.GetComponent<HeroController>().Velocity.x).ToString());
-        form.AddField("y", (currentCat.GetComponent<HeroController>().Velocity.y).ToString());
+        Vector2 cur_cat_command = currentCat.GetComponent<HeroController>().sendCommand();
+
+        form.AddField("x", (cur_cat_command.x).ToString());
+        form.AddField("y", (cur_cat_command.y).ToString());
         form.AddField("session", timeStamp);
         //www = new WWW("http://ws.gamejam2016.laresistencia.pe/updateposition", form);
         www = new WWW(BASE_URL + "/updateposition", form);
@@ -73,8 +75,8 @@ public class MultiplayerMgr : MonoBehaviour {
             var oth_posy = float.Parse(data[3]);
             
             Debug.Log("RECIEVING: cat1x:" + _www.text);
-            currentCat.GetComponent<HeroController>().receiveVelocity(new Vector3(cur_posx, 0.0f, cur_posy));
-            otherCat.GetComponent<HeroController>().receiveVelocity(new Vector3(oth_posx, 0.0f, oth_posy));
+            currentCat.GetComponent<HeroController>().receiveCommand(new Vector3(cur_posx, 0.0f, cur_posy));
+            otherCat.GetComponent<HeroController>().receiveCommand(new Vector3(oth_posx, 0.0f, oth_posy));
 
             //Vector3 position = currentCat.gameObject.transform.localPosition;
             //position.x = float.Parse(data[0]);
