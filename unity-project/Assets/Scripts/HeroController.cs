@@ -114,7 +114,7 @@ public class HeroController : MonoBehaviour {
 
     public void receiveCommand(Vector3 _command)
     {
-        commandQueueRecv.Enqueue(new Vector2(_command.x, _command.y));
+        commandQueueRecv.Enqueue(new Vector2(_command.x, _command.z));
     }
 
     void OnCollisionEnter(Collision collision)

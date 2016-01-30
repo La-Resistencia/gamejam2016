@@ -75,8 +75,8 @@ public class MultiplayerMgr : MonoBehaviour {
             var oth_posy = float.Parse(data[3]);
             
             Debug.Log("RECIEVING: cat1x:" + _www.text);
-            currentCat.GetComponent<HeroController>().receiveCommand(new Vector3(cur_posx, 0.0f, cur_posy));
-            otherCat.GetComponent<HeroController>().receiveCommand(new Vector3(oth_posx, 0.0f, oth_posy));
+            currentCat.GetComponent<HeroController>().receiveCommand(new Vector3(cur_posx, cur_posy, 0.0f));
+            otherCat.GetComponent<HeroController>().receiveCommand(new Vector3(oth_posx, oth_posy, 0.0f));
 
             //Vector3 position = currentCat.gameObject.transform.localPosition;
             //position.x = float.Parse(data[0]);
