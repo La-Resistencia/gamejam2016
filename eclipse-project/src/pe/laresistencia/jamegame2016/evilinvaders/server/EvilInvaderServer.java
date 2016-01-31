@@ -11,10 +11,11 @@ import org.eclipse.jetty.servlet.FilterHolder;
 import org.eclipse.jetty.servlet.ServletContextHandler;
 import org.eclipse.jetty.servlets.CrossOriginFilter;
 
+import pe.laresistencia.jamegame2016.evilinvaders.server.handlers.CatchHandler;
 import pe.laresistencia.jamegame2016.evilinvaders.server.handlers.ConfigureSessionHandler;
 import pe.laresistencia.jamegame2016.evilinvaders.server.handlers.CrossdomainHandler;
 import pe.laresistencia.jamegame2016.evilinvaders.server.handlers.PingHandler;
-import pe.laresistencia.jamegame2016.evilinvaders.server.handlers.UpdatePositionHandler;
+import pe.laresistencia.jamegame2016.evilinvaders.server.handlers.UpdateCommandHandler;
 
 public class EvilInvaderServer {
 	public static void main(String[] args) throws Exception {
@@ -34,7 +35,8 @@ public class EvilInvaderServer {
         webServicesContext.addServlet(CrossdomainHandler.class, "/crossdomain.xml");
         webServicesContext.addServlet(PingHandler.class, "/ping");
         webServicesContext.addServlet(ConfigureSessionHandler.class, "/configuresession");
-        webServicesContext.addServlet(UpdatePositionHandler.class, "/updateposition");
+        webServicesContext.addServlet(UpdateCommandHandler.class, "/updateposition");
+        webServicesContext.addServlet(CatchHandler.class, "/catch");
         
         ContextHandlerCollection contexts = new ContextHandlerCollection();
         contexts.setHandlers(new Handler[] { webServicesContext});

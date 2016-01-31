@@ -3,8 +3,10 @@ using System.Collections;
 using System;
 
 public class MultiplayerController : MonoBehaviour {
+    public const string BASE_URL ="http://10.10.10.13:9117";
+
     public const float deltaX = 0.05f;
-    public const float deltaY = -0.05f;
+    public const float deltaY = 0.05f;
 
     public CatController cat1;
     public CatController cat2;
@@ -17,7 +19,7 @@ public class MultiplayerController : MonoBehaviour {
 
     private float ndeltaX = 0f;
     private float ndeltaY = 0f;
-
+    private bool chase = false;
     // Use this for initialization
     void Start ()
     {
@@ -25,7 +27,7 @@ public class MultiplayerController : MonoBehaviour {
         WWWForm form = new WWWForm();
         form.AddField("session", timeStamp);
         //WWW _www = new WWW("http://ws.gamejam2016.laresistencia.pe/configuresession", form);
-        WWW _www = new WWW("http://localhost:9117/configuresession", form);
+        WWW _www = new WWW(BASE_URL + "/configuresession", form);
         StartCoroutine(handleConfigureSession(_www));
 	}
 
@@ -77,8 +79,16 @@ public class MultiplayerController : MonoBehaviour {
         form.AddField("x", (currentCat.transform.localPosition.x + ndeltaX).ToString());
         form.AddField("y", (currentCat.transform.localPosition.y + ndeltaY).ToString());
         form.AddField("session", timeStamp);
-        //www = new WWW("http://ws.gamejam2016.laresistencia.pe/updateposition", form);
-        www = new WWW("http://localhost:9117/updateposition", form);
+        
+        if (chase)
+        {
+            www = new WWW(BASE_URL + "/catch", form);
+            chase = false;
+        }
+        else
+        {
+            www = new WWW(BASE_URL + "/updateposition", form);
+        }
 
         ndeltaX = 0f;
         ndeltaY = 0f;
@@ -98,14 +108,16 @@ public class MultiplayerController : MonoBehaviour {
             return;
         }
 
-        Vector3 position = currentCat.transform.localPosition;
-
-	    if(Input.GetKeyDown(KeyCode.UpArrow)){
-            ndeltaY -= deltaY;
+        if (Input.GetKeyDown(KeyCode.Space))
+        {
+            chase = true;
+        }
+	    else if(Input.GetKeyDown(KeyCode.UpArrow)){
+            ndeltaY += deltaY;
         }
         else if (Input.GetKeyDown(KeyCode.DownArrow))
         {
-            ndeltaY += deltaY;
+            ndeltaY -= deltaY;
         }
         else if (Input.GetKeyDown(KeyCode.LeftArrow))
         {
@@ -115,6 +127,5 @@ public class MultiplayerController : MonoBehaviour {
         {
             ndeltaX += deltaX;
         }
-
 	}
 }

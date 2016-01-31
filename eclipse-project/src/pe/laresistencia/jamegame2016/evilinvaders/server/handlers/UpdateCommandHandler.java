@@ -10,7 +10,7 @@ import pe.laresistencia.jamegame2016.evilinvaders.server.model.CatActor;
 import pe.laresistencia.jamegame2016.evilinvaders.server.model.SessionManager;
 
 @SuppressWarnings("serial")
-public class UpdatePositionHandler extends HttpServlet{
+public class UpdateCommandHandler extends HttpServlet{
 	
 	@Override
 	protected void doPost(HttpServletRequest request, HttpServletResponse response ) 
@@ -23,8 +23,10 @@ public class UpdatePositionHandler extends HttpServlet{
 			float y = Float.parseFloat(request.getParameter("y"));
 			
 			CatActor cat = SessionManager.instance.getCatActorFromSession(session);
+			
 			cat.x = x;
 			cat.y = y;
+			
 			
 			CatActor otherCat = SessionManager.instance.getOtherCatActorFromSession(session);
 			
