@@ -120,7 +120,30 @@ public class MultiplayerController : MonoBehaviour {
         else if (Input.GetKeyDown(KeyCode.Space))
         {
             //ndeltaZ += deltaZ;
+            WWWForm form = new WWWForm();
+            form.AddField("session", timeStamp);
+            www = new WWW(BASE_URL + "/catch", form);
+
+            StartCoroutine(handleWWWCatch(www));
         }
 
 	}
+
+    IEnumerator handleWWWCatch(WWW _www)
+    {
+        yield return _www;
+
+        string[] data = _www.text.Split(';');
+
+        Vector3 position = currentCat.gameObject.transform.localPosition;
+        position.x = float.Parse(data[0]);
+        position.y = float.Parse(data[1]);
+        currentCat.gameObject.transform.localPosition = position;
+
+        position = otherCat.gameObject.transform.localPosition;
+        position.x = float.Parse(data[2]);
+        position.y = float.Parse(data[3]);
+        otherCat.gameObject.transform.localPosition = position;
+
+    }
 }
