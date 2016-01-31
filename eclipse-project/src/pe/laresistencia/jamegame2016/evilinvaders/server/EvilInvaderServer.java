@@ -11,8 +11,10 @@ import org.eclipse.jetty.servlet.FilterHolder;
 import org.eclipse.jetty.servlet.ServletContextHandler;
 import org.eclipse.jetty.servlets.CrossOriginFilter;
 
+import pe.laresistencia.jamegame2016.evilinvaders.server.handlers.ConfigureSessionHandler;
 import pe.laresistencia.jamegame2016.evilinvaders.server.handlers.CrossdomainHandler;
 import pe.laresistencia.jamegame2016.evilinvaders.server.handlers.PingHandler;
+import pe.laresistencia.jamegame2016.evilinvaders.server.handlers.UpdatePositionHandler;
 
 public class EvilInvaderServer {
 	public static void main(String[] args) throws Exception {
@@ -28,12 +30,11 @@ public class EvilInvaderServer {
         cors.setInitParameter(CrossOriginFilter.ACCESS_CONTROL_ALLOW_ORIGIN_HEADER, "*");
         cors.setInitParameter(CrossOriginFilter.ALLOWED_METHODS_PARAM, "GET,POST,HEAD");
         cors.setInitParameter(CrossOriginFilter.ALLOWED_HEADERS_PARAM, "X-Requested-With,Content-Type,Accept,Origin");
- 
-        //webServicesContext.addServlet(GetRolHandler.class, "/getrol");
-        //webServicesContext.addServlet(GetRolHandler2.class, "/getrol2");
-        
+    
         webServicesContext.addServlet(CrossdomainHandler.class, "/crossdomain.xml");
         webServicesContext.addServlet(PingHandler.class, "/ping");
+        webServicesContext.addServlet(ConfigureSessionHandler.class, "/configuresession");
+        webServicesContext.addServlet(UpdatePositionHandler.class, "/updateposition");
         
         ContextHandlerCollection contexts = new ContextHandlerCollection();
         contexts.setHandlers(new Handler[] { webServicesContext});
