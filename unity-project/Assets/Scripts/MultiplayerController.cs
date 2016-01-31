@@ -1,9 +1,10 @@
 ﻿using UnityEngine;
 using System.Collections;
 using System;
+using UnityEngine.UI;
 
 public class MultiplayerController : MonoBehaviour {
-    public const string BASE_URL ="http://10.10.10.13:9117";
+    public string BASE_URL ="http://10.10.10.13:9117";
 
     public const float deltaX = 0.5f;
     public const float deltaY = 0.5f;
@@ -21,17 +22,29 @@ public class MultiplayerController : MonoBehaviour {
     private float ndeltaY = 0f;
     private bool chase = false;
     // Use this for initialization
+
+    public InputField ipInput;
+    public Button connectButton;
+
     void Start ()
+    {
+               
+	}
+
+    public void Connect()
     {
         timeStamp = GetTimestamp(DateTime.Now);
         WWWForm form = new WWWForm();
         form.AddField("session", timeStamp);
-        //WWW _www = new WWW("http://ws.gamejam2016.laresistencia.pe/configuresession", form);
+
+        BASE_URL = "http://" + ipInput.text + ":9117";
+
+        ipInput.gameObject.SetActive(false);
+        connectButton.gameObject.SetActive(false);
+
         WWW _www = new WWW(BASE_URL + "/configuresession", form);
         StartCoroutine(handleConfigureSession(_www));
-
-        
-	}
+    }
 
     IEnumerator handleConfigureSession(WWW _www)
     {

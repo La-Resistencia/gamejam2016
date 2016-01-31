@@ -44,12 +44,13 @@ public class CatchHandler extends HttpServlet{
 			
 			double distance = Math.sqrt((cat.x - otherCat.x)*(cat.x - otherCat.x) + (cat.y - otherCat.y)*(cat.y - otherCat.y));
 			
-			System.out.println(distance);
+			//System.out.println(distance);
 			
-			if(distance < 0.5f)
+			if(distance < 1f)
 			{
 				cat.winner = true;
 				otherCat.winner = false;
+				SessionManager.instance.matchEnded = true;
 				response.getWriter().write("WIN");
 				return;
 			}
