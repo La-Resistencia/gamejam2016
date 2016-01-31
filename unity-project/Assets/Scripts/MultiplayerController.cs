@@ -24,7 +24,8 @@ public class MultiplayerController : MonoBehaviour {
         timeStamp = GetTimestamp(DateTime.Now);
         WWWForm form = new WWWForm();
         form.AddField("session", timeStamp);
-        WWW _www = new WWW("http://ws.gamejam2016.laresistencia.pe/configuresession", form);
+        //WWW _www = new WWW("http://ws.gamejam2016.laresistencia.pe/configuresession", form);
+        WWW _www = new WWW("http://localhost:9117/configuresession", form);
         StartCoroutine(handleConfigureSession(_www));
 	}
 
@@ -76,7 +77,8 @@ public class MultiplayerController : MonoBehaviour {
         form.AddField("x", (currentCat.transform.localPosition.x + ndeltaX).ToString());
         form.AddField("y", (currentCat.transform.localPosition.y + ndeltaY).ToString());
         form.AddField("session", timeStamp);
-        www = new WWW("http://ws.gamejam2016.laresistencia.pe/updateposition", form);
+        //www = new WWW("http://ws.gamejam2016.laresistencia.pe/updateposition", form);
+        www = new WWW("http://localhost:9117/updateposition", form);
 
         ndeltaX = 0f;
         ndeltaY = 0f;
