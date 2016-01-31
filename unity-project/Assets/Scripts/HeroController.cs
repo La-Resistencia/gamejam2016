@@ -25,8 +25,8 @@ public class HeroController : MonoBehaviour {
     private float rotationSpeed;
     private float rotation;
 
-    public float lastHor = -1;
-    public float lastVer = -1;
+    public float lastHor = float.NaN;
+    public float lastVer = float.NaN;
 
     private float speedToClamp;
 

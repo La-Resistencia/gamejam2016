@@ -26,6 +26,7 @@ public class MultiplayerMgr : MonoBehaviour {
         WWW _www = new WWW(BASE_URL + "/configuresession", form);
         StartCoroutine(handleConfigureSession(_www));	
 	}
+
     IEnumerator handleConfigureSession(WWW _www)
     {
         yield return _www;
@@ -44,16 +45,24 @@ public class MultiplayerMgr : MonoBehaviour {
         heroController = currentCat.GetComponent<HeroController>();
         otherController = otherCat.GetComponent<HeroController>();
 
-        SendPosition();
+        StartCoroutine(SendPosition());
     }
 
-    private void SendPosition()
+    private IEnumerator SendPosition()
     {
+        while (true)
+        {
+            if(float.IsNaN(heroController.lastHor) || float.IsNaN(heroController.lastVer))
+                yield return null;
+            break;
+        }
+
         WWWForm form = new WWWForm();
         //form.AddField("x", (currentCat.transform.localPosition.x + ndeltaX).ToString());
         //form.AddField("y", (currentCat.transform.localPosition.y + ndeltaY).ToString());
         //form.AddField("session", timeStamp);
         //Vector2 cur_cat_command = currentCat.GetComponent<HeroController>().sendCommand();
+
 
         form.AddField("x", heroController.lastHor.ToString());
         form.AddField("y", heroController.lastVer.ToString());
@@ -65,8 +74,12 @@ public class MultiplayerMgr : MonoBehaviour {
         //ndeltaX = 0f;
         //ndeltaY = 0f;
 
+        heroController.lastHor = float.NaN;
+        heroController.lastVer = float.NaN;
+
         StartCoroutine(handleWWW(www));
     }
+    
 
     IEnumerator handleWWW(WWW _www)
     {
@@ -84,7 +97,7 @@ public class MultiplayerMgr : MonoBehaviour {
             var oth_posy = float.Parse(data[4]);
             var oth_posz = float.Parse(data[5]);
             
-            Debug.Log("RECIEVING: cat1x:" + _www.text);
+            //Debug.Log("RECIEVING: cat1x:" + _www.text);
             //currentCat.GetComponent<HeroController>().receiveCommand(new Vector3(cur_posx, cur_posy, 0.0f));
             //otherCat.GetComponent<HeroController>().receiveCommand(new Vector3(oth_posx, oth_posy, 0.0f));
 
