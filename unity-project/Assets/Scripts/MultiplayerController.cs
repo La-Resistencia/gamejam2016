@@ -5,8 +5,8 @@ using System;
 public class MultiplayerController : MonoBehaviour {
     public const string BASE_URL ="http://10.10.10.13:9117";
 
-    public const float deltaX = 0.05f;
-    public const float deltaY = 0.05f;
+    public const float deltaX = 0.5f;
+    public const float deltaY = 0.5f;
 
     public CatController cat1;
     public CatController cat2;
