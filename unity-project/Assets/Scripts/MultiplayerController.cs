@@ -25,6 +25,7 @@ public class MultiplayerController : MonoBehaviour {
 
     public InputField ipInput;
     public Button connectButton;
+    public Text gameOver;
 
     void Start ()
     {
@@ -70,11 +71,17 @@ public class MultiplayerController : MonoBehaviour {
 
         if (_www.text == "WIN")
         {
+            currentCat.gameObject.transform.localPosition = otherCat.gameObject.transform.localPosition;
+            gameOver.gameObject.SetActive(true);
+            gameOver.text = "YOU WIN!";
             death(otherCat);
         }
 
         else if(_www.text == "LOSE")
         {
+            otherCat.gameObject.transform.localPosition = currentCat.gameObject.transform.localPosition;
+            gameOver.gameObject.SetActive(true);
+            gameOver.text = "YOU DIE!";
             death(currentCat);
         }
 
