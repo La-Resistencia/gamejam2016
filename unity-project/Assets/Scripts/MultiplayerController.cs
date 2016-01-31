@@ -79,6 +79,10 @@ public class MultiplayerController : MonoBehaviour {
             position.x = float.Parse(data[2]) * transform.localScale.x;
             position.y = float.Parse(data[3]) * transform.localScale.y;
             otherCat.gameObject.transform.localPosition = position;
+            
+        }
+        if (_www.text != "WIN" || _www.text == "LOSE")
+        {
             SendPosition();
         }
 
