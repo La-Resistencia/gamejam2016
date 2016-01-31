@@ -36,9 +36,10 @@ public class UpdateCommandHandler extends HttpServlet{
 				cat.y = y;
 				cat.z = z;
 			}
-			
-			cat.prevX = cat.x;
-			cat.prevY = cat.y;
+			if(cat.x != 0)
+				cat.prevX = cat.x;
+			if(cat.y != 0)
+				cat.prevY = cat.y;
 			
 			CatActor otherCat = SessionManager.instance.getOtherCatActorFromSession(session);
 			
