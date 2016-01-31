@@ -114,6 +114,5 @@ public class MultiplayerController : MonoBehaviour {
             ndeltaX -= deltaX;
         }
 
-        currentCat.transform.localPosition = position;
 	}
 }
