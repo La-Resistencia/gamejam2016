@@ -34,7 +34,7 @@ public class UpdatePositionHandler extends HttpServlet{
 				return;
 			}
 			
-			response.getWriter().write("" + otherCat.x + ";" + otherCat.y);
+			response.getWriter().write("" + cat.x + ";" + cat.y + ";" + otherCat.x + ";" + otherCat.y);
 			
 		} catch (IOException e) {
 			e.printStackTrace();
