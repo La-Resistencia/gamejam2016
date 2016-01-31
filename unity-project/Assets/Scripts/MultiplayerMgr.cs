@@ -81,6 +81,7 @@ public class MultiplayerMgr : MonoBehaviour {
         if (_www.text != "NIL")
         {
             string[] data = _www.text.Split(';');
+            _www.Dispose();
 
             var cur_posx = float.Parse(data[0]);
             var cur_posy = float.Parse(data[1]);

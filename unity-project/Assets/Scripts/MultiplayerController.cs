@@ -64,8 +64,8 @@ public class MultiplayerController : MonoBehaviour {
             currentCat.gameObject.transform.localPosition = position;
 
             position = otherCat.gameObject.transform.localPosition;
-            position.x = float.Parse(data[2]);
-            position.y = float.Parse(data[3]);
+            position.x = float.Parse(data[3]);
+            position.y = float.Parse(data[4]);
             otherCat.gameObject.transform.localPosition = position;
         }
 
@@ -78,12 +78,14 @@ public class MultiplayerController : MonoBehaviour {
         WWWForm form = new WWWForm();
         form.AddField("x", (currentCat.transform.localPosition.x + ndeltaX).ToString());
         form.AddField("y", (currentCat.transform.localPosition.y + ndeltaY).ToString());
+        form.AddField("z", (currentCat.transform.localPosition.y + ndeltaY).ToString());
         form.AddField("session", timeStamp);
         //www = new WWW("http://ws.gamejam2016.laresistencia.pe/updateposition", form);
         www = new WWW(BASE_URL + "/updateposition", form);
 
         ndeltaX = 0f;
         ndeltaY = 0f;
+        
 
         StartCoroutine(handleWWW(www));
     }
