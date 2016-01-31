@@ -32,13 +32,14 @@ public class CatchHandler extends HttpServlet{
 			float deltaX = Math.abs(cat.x - otherCat.x);
 			float deltaY = Math.abs(cat.y - otherCat.y);
 			
-			if(deltaX < deltaY)
+		
+			if(deltaX > deltaY)
 			{
-				cat.x = cat.x + (otherCat.x - cat.x);
+				cat.x = cat.x + 0.2f*Math.signum(otherCat.x - cat.x);
 			}
 			else
 			{
-				cat.y = cat.y + (otherCat.y - cat.y);
+				cat.y = cat.y + 0.2f*Math.signum(otherCat.y - cat.y);
 			}
 			
 			response.getWriter().write("" + cat.x + ";" + cat.y + ";" + otherCat.x + ";" + otherCat.y);
