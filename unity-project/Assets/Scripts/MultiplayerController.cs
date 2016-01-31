@@ -6,7 +6,7 @@ public class MultiplayerController : MonoBehaviour {
     public const string BASE_URL ="http://10.10.10.13:9117";
 
     public const float deltaX = 0.05f;
-    public const float deltaY = -0.05f;
+    public const float deltaY = 0.05f;
     public const float deltaZ = 1f;
 
     public CatController cat1;
@@ -107,11 +107,11 @@ public class MultiplayerController : MonoBehaviour {
         Vector3 position = currentCat.transform.localPosition;
 
 	    if(Input.GetKeyDown(KeyCode.UpArrow)){
-            ndeltaY -= deltaY;
+            ndeltaY += deltaY;
         }
         else if (Input.GetKeyDown(KeyCode.DownArrow))
         {
-            ndeltaY += deltaY;
+            ndeltaY -= deltaY;
         }
         else if (Input.GetKeyDown(KeyCode.LeftArrow))
         {
@@ -121,7 +121,7 @@ public class MultiplayerController : MonoBehaviour {
         {
             ndeltaX += deltaX;
         }
-        else if (Input.GetKeyDown(KeyCode.Z))
+        else if (Input.GetKeyDown(KeyCode.Space))
         {
             ndeltaZ += deltaZ;
         }

@@ -25,13 +25,10 @@ public class UpdateCommandHandler extends HttpServlet{
 			
 			CatActor cat = SessionManager.instance.getCatActorFromSession(session);
 			
-			cat.prevX = cat.x;
-			cat.prevY = cat.y;
-			
 			if(z > 0)
 			{
-				cat.x = cat.prevX*10;
-				cat.y = cat.prevY*10;
+				cat.x = cat.prevX*2;
+				cat.y = cat.prevY*2;
 			}
 			else
 			{
@@ -39,6 +36,9 @@ public class UpdateCommandHandler extends HttpServlet{
 				cat.y = y;
 				cat.z = z;
 			}
+			
+			cat.prevX = cat.x;
+			cat.prevY = cat.y;
 			
 			CatActor otherCat = SessionManager.instance.getOtherCatActorFromSession(session);
 			
