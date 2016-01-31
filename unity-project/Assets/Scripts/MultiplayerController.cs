@@ -79,6 +79,7 @@ public class MultiplayerController : MonoBehaviour {
         form.AddField("x", (currentCat.transform.localPosition.x + ndeltaX).ToString());
         form.AddField("y", (currentCat.transform.localPosition.y + ndeltaY).ToString());
         form.AddField("session", timeStamp);
+        
         if (chase)
         {
             www = new WWW(BASE_URL + "/catch", form);
@@ -107,9 +108,11 @@ public class MultiplayerController : MonoBehaviour {
             return;
         }
 
-        Vector3 position = currentCat.transform.localPosition;
-
-	    if(Input.GetKeyDown(KeyCode.UpArrow)){
+        if (Input.GetKeyDown(KeyCode.Space))
+        {
+            chase = true;
+        }
+	    else if(Input.GetKeyDown(KeyCode.UpArrow)){
             ndeltaY += deltaY;
         }
         else if (Input.GetKeyDown(KeyCode.DownArrow))
@@ -124,11 +127,5 @@ public class MultiplayerController : MonoBehaviour {
         {
             ndeltaX += deltaX;
         }
-        
-        if (Input.GetKeyDown(KeyCode.Space))
-        {
-            chase = true;
-        }
-
 	}
 }
