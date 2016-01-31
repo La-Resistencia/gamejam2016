@@ -14,7 +14,11 @@ public class MultiplayerMgr : MonoBehaviour {
     private GameObject currentCat;
     private GameObject otherCat;
 	// Use this for initialization
+    public HeroController heroController;
+    public HeroController otherController;
+
 	void Start () {
+        
         timeStamp = GetTimestamp(DateTime.Now);
         WWWForm form = new WWWForm();
         form.AddField("session", timeStamp);
@@ -37,6 +41,9 @@ public class MultiplayerMgr : MonoBehaviour {
             otherCat = player1;
         }
 
+        heroController = currentCat.GetComponent<HeroController>();
+        otherController = otherCat.GetComponent<HeroController>();
+
         SendPosition();
     }
 
@@ -46,12 +53,13 @@ public class MultiplayerMgr : MonoBehaviour {
         //form.AddField("x", (currentCat.transform.localPosition.x + ndeltaX).ToString());
         //form.AddField("y", (currentCat.transform.localPosition.y + ndeltaY).ToString());
         //form.AddField("session", timeStamp);
-        Vector2 cur_cat_command = currentCat.GetComponent<HeroController>().sendCommand();
+        //Vector2 cur_cat_command = currentCat.GetComponent<HeroController>().sendCommand();
 
-        form.AddField("x", (cur_cat_command.x).ToString());
-        form.AddField("y", (cur_cat_command.y).ToString());
+        form.AddField("x", heroController.lastHor.ToString());
+        form.AddField("y", heroController.lastVer.ToString());
+        form.AddField("z", "1");
         form.AddField("session", timeStamp);
-        //www = new WWW("http://ws.gamejam2016.laresistencia.pe/updateposition", form);
+   
         www = new WWW(BASE_URL + "/updateposition", form);
 
         //ndeltaX = 0f;
@@ -70,13 +78,18 @@ public class MultiplayerMgr : MonoBehaviour {
 
             var cur_posx = float.Parse(data[0]);
             var cur_posy = float.Parse(data[1]);
+            var cur_posz = float.Parse(data[2]);
 
-            var oth_posx = float.Parse(data[2]);
-            var oth_posy = float.Parse(data[3]);
+            var oth_posx = float.Parse(data[3]);
+            var oth_posy = float.Parse(data[4]);
+            var oth_posz = float.Parse(data[5]);
             
             Debug.Log("RECIEVING: cat1x:" + _www.text);
-            currentCat.GetComponent<HeroController>().receiveCommand(new Vector3(cur_posx, cur_posy, 0.0f));
-            otherCat.GetComponent<HeroController>().receiveCommand(new Vector3(oth_posx, oth_posy, 0.0f));
+            //currentCat.GetComponent<HeroController>().receiveCommand(new Vector3(cur_posx, cur_posy, 0.0f));
+            //otherCat.GetComponent<HeroController>().receiveCommand(new Vector3(oth_posx, oth_posy, 0.0f));
+
+            heroController.DoCommand(cur_posx, cur_posy);
+            otherController.DoCommand(oth_posx, oth_posy);
 
             //Vector3 position = currentCat.gameObject.transform.localPosition;
             //position.x = float.Parse(data[0]);
