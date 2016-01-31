@@ -23,7 +23,6 @@ public class CatchHandler extends HttpServlet{
 			CatActor cat = SessionManager.instance.getCatActorFromSession(session);
 			CatActor otherCat = SessionManager.instance.getOtherCatActorFromSession(session);
 			
-			
 			if(otherCat == null)
 			{
 				response.getWriter().write("NIL");
@@ -35,11 +34,11 @@ public class CatchHandler extends HttpServlet{
 			
 			if(deltaX < deltaY)
 			{
-				cat.x = cat.x + (cat.x - otherCat.x)*2;
+				cat.x = cat.x + (otherCat.x - cat.x);
 			}
 			else
 			{
-				cat.y = cat.y + (cat.y - otherCat.y)*2;
+				cat.y = cat.y + (otherCat.y - cat.y);
 			}
 			
 			response.getWriter().write("" + cat.x + ";" + cat.y + ";" + otherCat.x + ";" + otherCat.y);

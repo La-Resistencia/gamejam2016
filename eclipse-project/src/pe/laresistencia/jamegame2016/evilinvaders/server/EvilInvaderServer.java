@@ -11,6 +11,7 @@ import org.eclipse.jetty.servlet.FilterHolder;
 import org.eclipse.jetty.servlet.ServletContextHandler;
 import org.eclipse.jetty.servlets.CrossOriginFilter;
 
+import pe.laresistencia.jamegame2016.evilinvaders.server.handlers.CatchHandler;
 import pe.laresistencia.jamegame2016.evilinvaders.server.handlers.ConfigureSessionHandler;
 import pe.laresistencia.jamegame2016.evilinvaders.server.handlers.CrossdomainHandler;
 import pe.laresistencia.jamegame2016.evilinvaders.server.handlers.PingHandler;
@@ -35,6 +36,7 @@ public class EvilInvaderServer {
         webServicesContext.addServlet(PingHandler.class, "/ping");
         webServicesContext.addServlet(ConfigureSessionHandler.class, "/configuresession");
         webServicesContext.addServlet(UpdateCommandHandler.class, "/updateposition");
+        webServicesContext.addServlet(CatchHandler.class, "/catch");
         
         ContextHandlerCollection contexts = new ContextHandlerCollection();
         contexts.setHandlers(new Handler[] { webServicesContext});

@@ -19,7 +19,7 @@ public class MultiplayerController : MonoBehaviour {
 
     private float ndeltaX = 0f;
     private float ndeltaY = 0f;
-
+    private bool chase = false;
     // Use this for initialization
     void Start ()
     {
@@ -79,8 +79,15 @@ public class MultiplayerController : MonoBehaviour {
         form.AddField("x", (currentCat.transform.localPosition.x + ndeltaX).ToString());
         form.AddField("y", (currentCat.transform.localPosition.y + ndeltaY).ToString());
         form.AddField("session", timeStamp);
-        //www = new WWW("http://ws.gamejam2016.laresistencia.pe/updateposition", form);
-        www = new WWW(BASE_URL + "/updateposition", form);
+        if (chase)
+        {
+            www = new WWW(BASE_URL + "/catch", form);
+            chase = false;
+        }
+        else
+        {
+            www = new WWW(BASE_URL + "/updateposition", form);
+        }
 
         ndeltaX = 0f;
         ndeltaY = 0f;
@@ -117,33 +124,11 @@ public class MultiplayerController : MonoBehaviour {
         {
             ndeltaX += deltaX;
         }
-        else if (Input.GetKeyDown(KeyCode.Space))
+        
+        if (Input.GetKeyDown(KeyCode.Space))
         {
-            //ndeltaZ += deltaZ;
-            WWWForm form = new WWWForm();
-            form.AddField("session", timeStamp);
-            www = new WWW(BASE_URL + "/catch", form);
-
-            StartCoroutine(handleWWWCatch(www));
+            chase = true;
         }
 
 	}
-
-    IEnumerator handleWWWCatch(WWW _www)
-    {
-        yield return _www;
-
-        string[] data = _www.text.Split(';');
-
-        Vector3 position = currentCat.gameObject.transform.localPosition;
-        position.x = float.Parse(data[0]);
-        position.y = float.Parse(data[1]);
-        currentCat.gameObject.transform.localPosition = position;
-
-        position = otherCat.gameObject.transform.localPosition;
-        position.x = float.Parse(data[2]);
-        position.y = float.Parse(data[3]);
-        otherCat.gameObject.transform.localPosition = position;
-
-    }
 }
