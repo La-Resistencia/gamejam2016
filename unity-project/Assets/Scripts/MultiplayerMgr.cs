@@ -45,18 +45,11 @@ public class MultiplayerMgr : MonoBehaviour {
         heroController = currentCat.GetComponent<HeroController>();
         otherController = otherCat.GetComponent<HeroController>();
 
-        StartCoroutine(SendPosition());
+        SendPosition();
     }
 
-    private IEnumerator SendPosition()
+    private void SendPosition()
     {
-        while (true)
-        {
-            if(float.IsNaN(heroController.lastHor) || float.IsNaN(heroController.lastVer))
-                yield return null;
-            break;
-        }
-
         WWWForm form = new WWWForm();
         //form.AddField("x", (currentCat.transform.localPosition.x + ndeltaX).ToString());
         //form.AddField("y", (currentCat.transform.localPosition.y + ndeltaY).ToString());
@@ -74,8 +67,8 @@ public class MultiplayerMgr : MonoBehaviour {
         //ndeltaX = 0f;
         //ndeltaY = 0f;
 
-        heroController.lastHor = float.NaN;
-        heroController.lastVer = float.NaN;
+        heroController.lastHor = -10000;
+        heroController.lastVer = -10000;
 
         StartCoroutine(handleWWW(www));
     }
@@ -101,8 +94,14 @@ public class MultiplayerMgr : MonoBehaviour {
             //currentCat.GetComponent<HeroController>().receiveCommand(new Vector3(cur_posx, cur_posy, 0.0f));
             //otherCat.GetComponent<HeroController>().receiveCommand(new Vector3(oth_posx, oth_posy, 0.0f));
 
-            heroController.DoCommand(cur_posx, cur_posy);
-            otherController.DoCommand(oth_posx, oth_posy);
+            if (cur_posx > -10000)
+            {
+                heroController.DoCommand(cur_posx, cur_posy);
+            }
+            if (oth_posx > -10000)
+            {
+                otherController.DoCommand(oth_posx, oth_posy);
+            }
 
             //Vector3 position = currentCat.gameObject.transform.localPosition;
             //position.x = float.Parse(data[0]);
