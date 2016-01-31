@@ -107,11 +107,11 @@ public class MultiplayerController : MonoBehaviour {
         }
         else if (Input.GetKeyDown(KeyCode.LeftArrow))
         {
-            ndeltaX += deltaX;
+            ndeltaX -= deltaX;
         }
         else if (Input.GetKeyDown(KeyCode.RightArrow))
         {
-            ndeltaX -= deltaX;
+            ndeltaX += deltaX;
         }
 
 	}
