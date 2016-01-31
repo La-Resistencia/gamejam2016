@@ -35,14 +35,24 @@ public class CatchHandler extends HttpServlet{
 		
 			if(deltaX > deltaY)
 			{
-				cat.x = cat.x + 0.2f*Math.signum(otherCat.x - cat.x);
+				cat.x = cat.x + 5f*Math.signum(otherCat.x - cat.x);
 			}
 			else
 			{
-				cat.y = cat.y + 0.2f*Math.signum(otherCat.y - cat.y);
+				cat.y = cat.y + 5f*Math.signum(otherCat.y - cat.y);
 			}
 			
+			double distance = Math.sqrt((cat.x - otherCat.x)*(cat.x - otherCat.x) + (cat.y - otherCat.y)*(cat.y - otherCat.y));
+			
+			if(distance < 0.5f)
+			{
+				cat.winner = true;
+				otherCat.winner = false;
+				response.getWriter().write("WIN");
+				return;
+			}
 			response.getWriter().write("" + cat.x + ";" + cat.y + ";" + otherCat.x + ";" + otherCat.y);
+			
 			
 		} catch (IOException e) {
 			e.printStackTrace();

@@ -26,13 +26,25 @@ public class UpdateCommandHandler extends HttpServlet{
 			
 			cat.x = x;
 			cat.y = y;
-			
-			
+						
 			CatActor otherCat = SessionManager.instance.getOtherCatActorFromSession(session);
 			
 			if(otherCat == null)
 			{
 				response.getWriter().write("NIL");
+				return;
+			}
+			
+			if(SessionManager.instance.matchEnded)
+			{
+				if(cat.winner)
+				{
+					response.getWriter().write("WIN");
+				}
+				else
+				{
+					response.getWriter().write("LOSE");
+				}
 				return;
 			}
 			

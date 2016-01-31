@@ -5,7 +5,7 @@ import java.util.Map;
 
 public class SessionManager {
 	public static SessionManager instance = new SessionManager();
-	
+	public boolean matchEnded = false;
 	public Map<String, CatActor> sessionMap;
 	
 	public String configureSession(String session)

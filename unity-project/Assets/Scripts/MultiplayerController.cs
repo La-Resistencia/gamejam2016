@@ -55,6 +55,18 @@ public class MultiplayerController : MonoBehaviour {
     {
         yield return _www;
 
+        if (_www.text == "WIN")
+        {
+            death(otherCat);
+            yield return null;
+        }
+
+        if(_www.text == "LOSE")
+        {
+            death(currentCat);
+            yield return null;
+        }
+
         if(_www.text != "NIL")
         {
             string[] data = _www.text.Split(';');
@@ -74,11 +86,11 @@ public class MultiplayerController : MonoBehaviour {
         //Debug.Log("returned " + _www.text);
         SendPosition();
     }
-    private void death()
+    private void death(CatController loserCat)
     {
         ParticleSystem death =  GameObject.Find("Death").GetComponent<ParticleSystem>();
         death.Play();
-        death.transform.position = new Vector3(currentCat.transform.position.x, currentCat.transform.position.y, death.transform.position.z);
+        death.transform.position = new Vector3(loserCat.transform.position.x, loserCat.transform.position.y, death.transform.position.z);
         
     }
 
