@@ -44,6 +44,8 @@ public class CatchHandler extends HttpServlet{
 			
 			double distance = Math.sqrt((cat.x - otherCat.x)*(cat.x - otherCat.x) + (cat.y - otherCat.y)*(cat.y - otherCat.y));
 			
+			System.out.println(distance);
+			
 			if(distance < 0.5f)
 			{
 				cat.winner = true;

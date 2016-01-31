@@ -58,16 +58,14 @@ public class MultiplayerController : MonoBehaviour {
         if (_www.text == "WIN")
         {
             death(otherCat);
-            yield return null;
         }
 
-        if(_www.text == "LOSE")
+        else if(_www.text == "LOSE")
         {
             death(currentCat);
-            yield return null;
         }
 
-        if(_www.text != "NIL")
+        else if(_www.text != "NIL")
         {
             string[] data = _www.text.Split(';');
 
@@ -81,10 +79,11 @@ public class MultiplayerController : MonoBehaviour {
             position.x = float.Parse(data[2]) * transform.localScale.x;
             position.y = float.Parse(data[3]) * transform.localScale.y;
             otherCat.gameObject.transform.localPosition = position;
+            SendPosition();
         }
 
         //Debug.Log("returned " + _www.text);
-        SendPosition();
+        
     }
     private void death(CatController loserCat)
     {
