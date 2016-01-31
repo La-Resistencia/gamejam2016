@@ -21,35 +21,12 @@ public class UpdateCommandHandler extends HttpServlet{
 			String session = request.getParameter("session");
 			float x = Float.parseFloat(request.getParameter("x"));
 			float y = Float.parseFloat(request.getParameter("y"));
-			float z = Float.parseFloat(request.getParameter("z"));
 			
 			CatActor cat = SessionManager.instance.getCatActorFromSession(session);
 			
-			if(z > 0)
-			{
-				if(cat.x != 0)
-					cat.x = cat.prevX*2;
-				else
-					cat.y = cat.prevY*2;
-				
-			}
-			else
-			{
-				cat.x = x;
-				cat.y = y;
-				cat.z = z;
-			}
-			if(cat.x != 0)
-			{
-				cat.prevX = cat.x;
-				cat.prevY = 0;
-			}
+			cat.x = x;
+			cat.y = y;
 			
-			if(cat.y != 0)
-			{
-				cat.prevY = cat.y;
-				cat.prevX = 0;
-			}
 			
 			CatActor otherCat = SessionManager.instance.getOtherCatActorFromSession(session);
 			
@@ -59,7 +36,7 @@ public class UpdateCommandHandler extends HttpServlet{
 				return;
 			}
 			
-			response.getWriter().write("" + cat.x + ";" + cat.y + ";" + cat.z + ";" + otherCat.x + ";" + otherCat.y + ";" + otherCat.z);
+			response.getWriter().write("" + cat.x + ";" + cat.y + ";" + otherCat.x + ";" + otherCat.y);
 			
 		} catch (IOException e) {
 			e.printStackTrace();

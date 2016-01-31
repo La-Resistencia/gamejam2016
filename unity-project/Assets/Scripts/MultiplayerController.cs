@@ -7,7 +7,6 @@ public class MultiplayerController : MonoBehaviour {
 
     public const float deltaX = 0.05f;
     public const float deltaY = 0.05f;
-    public const float deltaZ = 1f;
 
     public CatController cat1;
     public CatController cat2;
@@ -20,7 +19,6 @@ public class MultiplayerController : MonoBehaviour {
 
     private float ndeltaX = 0f;
     private float ndeltaY = 0f;
-    private float ndeltaZ = 0f;
 
     // Use this for initialization
     void Start ()
@@ -66,8 +64,8 @@ public class MultiplayerController : MonoBehaviour {
             currentCat.gameObject.transform.localPosition = position;
 
             position = otherCat.gameObject.transform.localPosition;
-            position.x = float.Parse(data[3]);
-            position.y = float.Parse(data[4]);
+            position.x = float.Parse(data[2]);
+            position.y = float.Parse(data[3]);
             otherCat.gameObject.transform.localPosition = position;
         }
 
@@ -80,14 +78,12 @@ public class MultiplayerController : MonoBehaviour {
         WWWForm form = new WWWForm();
         form.AddField("x", (currentCat.transform.localPosition.x + ndeltaX).ToString());
         form.AddField("y", (currentCat.transform.localPosition.y + ndeltaY).ToString());
-        form.AddField("z", ndeltaZ.ToString());
         form.AddField("session", timeStamp);
         //www = new WWW("http://ws.gamejam2016.laresistencia.pe/updateposition", form);
         www = new WWW(BASE_URL + "/updateposition", form);
 
         ndeltaX = 0f;
         ndeltaY = 0f;
-        ndeltaZ = 0f;
 
         StartCoroutine(handleWWW(www));
     }
@@ -123,7 +119,7 @@ public class MultiplayerController : MonoBehaviour {
         }
         else if (Input.GetKeyDown(KeyCode.Space))
         {
-            ndeltaZ += deltaZ;
+            //ndeltaZ += deltaZ;
         }
 
 	}
