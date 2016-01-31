@@ -3,6 +3,8 @@ using System.Collections;
 using System;
 
 public class MultiplayerController : MonoBehaviour {
+    public const string BASE_URL ="http://10.10.10.13:9117";
+
     public const float deltaX = 0.05f;
     public const float deltaY = -0.05f;
 
@@ -25,7 +27,7 @@ public class MultiplayerController : MonoBehaviour {
         WWWForm form = new WWWForm();
         form.AddField("session", timeStamp);
         //WWW _www = new WWW("http://ws.gamejam2016.laresistencia.pe/configuresession", form);
-        WWW _www = new WWW("http://localhost:9117/configuresession", form);
+        WWW _www = new WWW(BASE_URL + "/configuresession", form);
         StartCoroutine(handleConfigureSession(_www));
 	}
 
@@ -78,7 +80,7 @@ public class MultiplayerController : MonoBehaviour {
         form.AddField("y", (currentCat.transform.localPosition.y + ndeltaY).ToString());
         form.AddField("session", timeStamp);
         //www = new WWW("http://ws.gamejam2016.laresistencia.pe/updateposition", form);
-        www = new WWW("http://localhost:9117/updateposition", form);
+        www = new WWW(BASE_URL + "/updateposition", form);
 
         ndeltaX = 0f;
         ndeltaY = 0f;
