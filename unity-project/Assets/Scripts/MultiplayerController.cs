@@ -29,6 +29,8 @@ public class MultiplayerController : MonoBehaviour {
         //WWW _www = new WWW("http://ws.gamejam2016.laresistencia.pe/configuresession", form);
         WWW _www = new WWW(BASE_URL + "/configuresession", form);
         StartCoroutine(handleConfigureSession(_www));
+
+        
 	}
 
     IEnumerator handleConfigureSession(WWW _www)
@@ -71,6 +73,13 @@ public class MultiplayerController : MonoBehaviour {
 
         //Debug.Log("returned " + _www.text);
         SendPosition();
+    }
+    private void death()
+    {
+        ParticleSystem death =  GameObject.Find("Death").GetComponent<ParticleSystem>();
+        death.Play();
+        death.transform.position = new Vector3(currentCat.transform.position.x, currentCat.transform.position.y, death.transform.position.z);
+        
     }
 
     private void SendPosition()
