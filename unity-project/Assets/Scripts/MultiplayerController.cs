@@ -15,8 +15,11 @@ public class MultiplayerController : MonoBehaviour {
     string timeStamp;
     private WWW www = null;
 
-	// Use this for initialization
-	void Start ()
+    private float ndeltaX = 0f;
+    private float ndeltaY = 0f;
+
+    // Use this for initialization
+    void Start ()
     {
         timeStamp = GetTimestamp(DateTime.Now);
         WWWForm form = new WWWForm();
@@ -40,12 +43,7 @@ public class MultiplayerController : MonoBehaviour {
             otherCat = cat1;
         }
 
-        WWWForm form = new WWWForm();
-        form.AddField("x", currentCat.transform.localPosition.x.ToString());
-        form.AddField("y", currentCat.transform.localPosition.y.ToString());
-        form.AddField("session", timeStamp);
-        www = new WWW("http://ws.gamejam2016.laresistencia.pe/updateposition", form);
-        StartCoroutine(handleWWW(www));
+        SendPosition();
     }
 
     IEnumerator handleWWW(WWW _www)
@@ -55,18 +53,34 @@ public class MultiplayerController : MonoBehaviour {
         if(_www.text != "NIL")
         {
             string[] data = _www.text.Split(';');
-            Vector3 position = otherCat.gameObject.transform.localPosition;
+
+            
+            Vector3 position = currentCat.gameObject.transform.localPosition;
             position.x = float.Parse(data[0]);
             position.y = float.Parse(data[1]);
+            currentCat.gameObject.transform.localPosition = position;
+
+            position = otherCat.gameObject.transform.localPosition;
+            position.x = float.Parse(data[2]);
+            position.y = float.Parse(data[3]);
             otherCat.gameObject.transform.localPosition = position;
         }
 
         //Debug.Log("returned " + _www.text);
+        SendPosition();
+    }
+
+    private void SendPosition()
+    {
         WWWForm form = new WWWForm();
-        form.AddField("x", currentCat.transform.localPosition.x.ToString());
-        form.AddField("y", currentCat.transform.localPosition.y.ToString());
+        form.AddField("x", (currentCat.transform.localPosition.x + ndeltaX).ToString());
+        form.AddField("y", (currentCat.transform.localPosition.y + ndeltaY).ToString());
         form.AddField("session", timeStamp);
         www = new WWW("http://ws.gamejam2016.laresistencia.pe/updateposition", form);
+
+        ndeltaX = 0f;
+        ndeltaY = 0f;
+
         StartCoroutine(handleWWW(www));
     }
 
@@ -74,8 +88,8 @@ public class MultiplayerController : MonoBehaviour {
     {
         return value.ToString("yyyyMMddHHmmssffff");
     }
-	
-	// Update is called once per frame
+
+    
 	void Update () {
         if (currentCat == null)
         {
@@ -85,19 +99,19 @@ public class MultiplayerController : MonoBehaviour {
         Vector3 position = currentCat.transform.localPosition;
 
 	    if(Input.GetKeyDown(KeyCode.UpArrow)){
-            position.y -= deltaY;
+            ndeltaY -= deltaY;
         }
         else if (Input.GetKeyDown(KeyCode.DownArrow))
         {
-            position.y += deltaY;
+            ndeltaY += deltaY;
         }
         else if (Input.GetKeyDown(KeyCode.LeftArrow))
         {
-            position.x += deltaY;
+            ndeltaX += deltaX;
         }
         else if (Input.GetKeyDown(KeyCode.RightArrow))
         {
-            position.x -= deltaY;
+            ndeltaX -= deltaX;
         }
 
         currentCat.transform.localPosition = position;
