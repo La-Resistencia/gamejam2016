@@ -59,13 +59,13 @@ public class MultiplayerController : MonoBehaviour {
 
             
             Vector3 position = currentCat.gameObject.transform.localPosition;
-            position.x = float.Parse(data[0]);
-            position.y = float.Parse(data[1]);
+            position.x = (float.Parse(data[0]))*transform.localScale.x;
+            position.y = float.Parse(data[1])*transform.localScale.y;
             currentCat.gameObject.transform.localPosition = position;
 
             position = otherCat.gameObject.transform.localPosition;
-            position.x = float.Parse(data[2]);
-            position.y = float.Parse(data[3]);
+            position.x = float.Parse(data[2]) * transform.localScale.x;
+            position.y = float.Parse(data[3]) * transform.localScale.y;
             otherCat.gameObject.transform.localPosition = position;
         }
 
@@ -76,8 +76,8 @@ public class MultiplayerController : MonoBehaviour {
     private void SendPosition()
     {
         WWWForm form = new WWWForm();
-        form.AddField("x", (currentCat.transform.localPosition.x + ndeltaX).ToString());
-        form.AddField("y", (currentCat.transform.localPosition.y + ndeltaY).ToString());
+        form.AddField("x", (currentCat.transform.localPosition.x/transform.localScale.x + ndeltaX).ToString());
+        form.AddField("y", (currentCat.transform.localPosition.y/transform.localScale.y + ndeltaY).ToString());
         form.AddField("session", timeStamp);
         
         if (chase)
