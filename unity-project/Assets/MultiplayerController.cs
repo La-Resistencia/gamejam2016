@@ -9,7 +9,9 @@ public class MultiplayerController : MonoBehaviour {
 
 	// Use this for initialization
 	void Start () {
-        www = new WWW("http://ws.gamejam2016.laresistencia.pe/ping");
+        WWWForm form = new WWWForm();
+        form.AddField("data", "data");
+        www = new WWW("http://ws.gamejam2016.laresistencia.pe/ping", form);
 
         StartCoroutine(handleWWW(www));
 	}
